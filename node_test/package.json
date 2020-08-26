@@ -1,0 +1,18 @@
+{
+  "name": "node_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "ios": "APPIUM_OS=ios npm start",
+    "android": "APPIUM_OS=android npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sedthawuth Maisonti",
+  "license": "ISC",
+  "dependencies": {
+    "webdriverio": "^6.4.2",
+    "appium-flutter-finder": "0.0.13"
+  }
+}
