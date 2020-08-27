@@ -13,6 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "webdriverio": "^6.4.2",
-    "appium-flutter-finder": "0.0.13"
+    "appium-flutter-finder": "0.0.22",
+    "appium": "^1.18.1",
+    "@wdio/cli": "6.4.2",
+    "wd": "^1.13.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.2"
   }
 }
