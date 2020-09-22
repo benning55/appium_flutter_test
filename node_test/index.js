@@ -1,22 +1,16 @@
 const wdio = require("webdriverio");
 // const assert = require('assert');
-const { byValueKey } = require('appium-flutter-finder');
+const { byValueKey, byText, byType } = require('appium-flutter-finder');
 const expect = require('chai').expect;
 
 
-const osSpecificOps = process.env.APPIUM_OS === 'android' ? {
+const osSpecificOps = {
     platformName: 'Android',
-    deviceName: '4b283c1f9905',
+    deviceName: 'emulator-5554',
     // @todo support non-unix style path
-    app: '/home/benntend/Desktop/appium_flutter_test/myapp/build/app/outputs/apk/debug/app-debug.apk',
-  }: process.env.APPIUM_OS === 'ios' ? {
-    platformName: 'iOS',
-    platformVersion: '12.2',
-    deviceName: 'iPhone X',
-    noReset: true,
-    app: __dirname +  '/../apps/Runner.zip',
-  
-  } : {};
+    app: 'C:\\Users\\bmais\\Documents\\appium_flutter_test\\myapp\\build\\app\\outputs\\apk\\debug\\app-debug.apk'
+    // app: '/home/benntend/Desktop/appium_flutter_test/myapp/build/app/outputs/apk/debug/app-debug.apk',
+  }
 
   
   const opts = {
@@ -43,6 +37,11 @@ const osSpecificOps = process.env.APPIUM_OS === 'android' ? {
       expect(await driver.getElementText(countText)).to.equal('0');
     });
 
+    // it('Check Log In text', async function () {
+    //   this.timeout(30*1000);
+    //   expect(await driver.getElementText(byText('Log in'))).to.equal('Log in');
+    // });
+
     it('Press 2 Time and check is 2', async function () {
       this.timeout(30*1000);
       await driver.elementClick(buttonFinder);
@@ -56,11 +55,32 @@ const osSpecificOps = process.env.APPIUM_OS === 'android' ? {
       expect(await driver.getElementText(countText)).to.equal('12');
     });
 
+    it('Enter Some Text', async function() {
+      this.timeout(30*1000);
+      expect(await driver.elementSendKeys(byType('TextField'), 'Benning Is Awsomr'))
+    });
+
     it('Go to next pages and check is correct', async function () {
       this.timeout(30*1000);
       await driver.elementClick(byValueKey('goLogin'));
-      await driver.execute('flutter:waitFor', byValueKey('loginWord'));
+      // await driver.execute('flutter:waitFor', byValueKey('loginWord'));
       expect(await driver.getElementText(byValueKey('loginWord'))).to.equal('Login Pages');
+    });
+
+    it('Enter username and password', async function() {
+      this.timeout(300*1000);
+      // await driver.elementSendKeys(byValueKey('TextField'), 'test35@gmail.com');
+      // await driver.elementClick(byType('TextField'));
+      // await driver.elementSendKeys(byText('Email'), 'test35@gmail.com');
+      // await driver.execute('flutter:enterText', 'I can enter text')
+      await driver.elementSendKeys(byValueKey('passTxt'), '12345678');
+      await driver.elementClick(byValueKey('loginBtn'));
+      // await driver.execute('flutter:waitFor', byValueKey('firstText'));
+      // expect(await driver.getElementText(byValueKey('firstText'))).to.equal('You have pushed the button this many times:')
+    });
+
+    it('Check the main page', async function() {
+      expect(await driver.getElementText(byValueKey('textCheck'))).to.equal('You have pushed the button this many times:');
     });
 
     after( function() {
@@ -68,6 +88,9 @@ const osSpecificOps = process.env.APPIUM_OS === 'android' ? {
     })
 
   });
+
+  let test2 = require('./second');
+  test2.benning();
 
 // (async () => {
 //     const counterTextFinder = byValueKey('counter');

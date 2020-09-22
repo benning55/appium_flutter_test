@@ -39,6 +39,33 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+
+        return AlertDialog(
+          title: new Text("Alert message !"),
+          content: Text("Welcome to ExecuteAutomation" + _counter.toString(), key: Key("alert_text")),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              }, 
+              child: new Text("Close", key: Key("close_button"),),
+            )
+          ],
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -58,9 +85,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    final checkField = TextField(
+      obscureText: false,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "hello",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32))
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        key: Key('FlutterDemo'),
       ),
       body: Center(
         child: Column(
@@ -68,13 +105,40 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               'You have pushed the button this many times:',
+              key: Key('textCheck'),
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
               key: Key('counter'),
             ),
-            loginButon2
+            loginButon2,
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new RaisedButton(
+                  onPressed: () {
+                    _showDialog();
+                  },
+                  key: Key("add"),
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: Colors.blue,
+                  child: Text("Show"),
+                ),
+                new RaisedButton(
+                  onPressed: () {
+                    _decrementCounter();
+                  },
+                  key: Key("sub"),
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: Colors.red,
+                  child: new Text("Subtract"),
+                )
+              ],
+            ),
+            checkField
           ],
         ),
       ),
